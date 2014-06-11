@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>60 seconds</title>
+    </head>
+    <body>
+        <h1>60 seconds</h1>
+	<div id="sec" style="font-size:128px"></div>
+        <p><input type="button" value="Start!" style="font-size:24px" onclick="start();"></p>
+        <p><input type="button" value="Stop!" style="font-size:24px" onclick="stop();"></p>
+        <p id="result"></p>
+        <script>
+            var start;
+            var stop;
+            var SIXTY_SECONDS = 60 * 1000;
+            timerId;
+            
+          function start(running) {		
+
+                // start時刻を取得
+                start = new Date().getTime();
+     		 
+		timer();
+            }
+
+	//タイマー起動(0.01秒刻み)
+	function timer() {
+            document.getElementById('sec').innerHTML = (((new Date()).getTime() - start) / 1000).toFixed(2);
+            timerId = setTimeout(function() {
+                timer();
+            }, 10);
+        }
+
+       //タイマー停止
+       function stop(running) {
+		        
+		// stop時刻を取得
+                stop = new Date().getTime();
+         	clearTimeout(timerId);
+                
+                // 差を算出
+                var diff = SIXTY_SECONDS - (stop - start);
+                
+                // 結果を表示
+                var e = document.getElementById('result');
+                if (diff == 0) {
+                    e.innerHTML = 'Excellent！';
+                } else if (diff > 0) {
+                    e.innerHTML = (diff / 1000) + 'Seconds faster！';
+                } else {
+                    e.innerHTML = (diff / 1000) + 'Seconds later！';
+                }
+             
+            }
+        </script>
+    </body>
+</html>
+
+
